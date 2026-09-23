@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "AuthForge",
+  "version": "1.0.0",
+  "description": "Zero-knowledge 2FA codes for the current site. End-to-end encrypted; the server only ever stores ciphertext.",
+  "minimum_chrome_version": "116",
+  "permissions": ["storage", "clipboardWrite", "alarms"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AuthForge"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "copy-code": {
+      "suggested_key": { "default": "Ctrl+Shift+C", "mac": "Command+Shift+C" },
+      "description": "Copy the matching verification code for this site"
+    },
+    "auto-fill": {
+      "suggested_key": { "default": "Ctrl+Shift+F", "mac": "Command+Shift+F" },
+      "description": "Fill the verification code into the detected 2FA input"
+    }
+  }
+}

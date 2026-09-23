@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AuthForge</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="hdr">
+        <div class="brand">
+          <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+            <g fill="none" stroke="currentColor" stroke-width="4.4" stroke-linecap="round">
+              <circle cx="24" cy="24" r="9.5" />
+              <path d="M30.6 30.6 46 46" />
+              <path d="M40 40l5.2-5.2" />
+              <path d="M45 45l4.2-4.2" />
+            </g>
+          </svg>
+          <span class="name">Auth<b>Forge</b></span>
+        </div>
+        <div class="toggles">
+          <button id="btn-theme" class="icon-btn" title="Theme" aria-label="Toggle theme"></button>
+          <button id="btn-lang" class="icon-btn lang" title="Language" aria-label="Switch language"></button>
+        </div>
+      </header>
+
+      <!-- ===== PAIRING ===== -->
+      <section id="view-pair" class="view" hidden>
+        <h1 class="h1" data-i18n="ext.pair">Pair with your vault</h1>
+        <p class="muted small" data-i18n="ext.pairDesc"></p>
+        <form id="pair-form" class="form" autocomplete="off">
+          <div class="seg" role="tablist">
+            <button type="button" class="seg-btn active" data-mode="login" data-i18n="auth.signIn">Sign in</button>
+            <button type="button" class="seg-btn" data-mode="register" data-i18n="auth.createAccount">Create account</button>
+          </div>
+          <label class="field">
+            <span class="lbl" data-i18n="auth.serverUrl">Server URL</span>
+            <input id="pair-url" type="url" placeholder="https://2fa.example.com" required />
+          </label>
+          <label class="field">
+            <span class="lbl" data-i18n="auth.email">Email</span>
+            <input id="pair-email" type="email" placeholder="you@example.com" required />
+          </label>
+          <label class="field">
+            <span class="lbl" data-i18n="ext.masterPw">Master password</span>
+            <input id="pair-pw" type="password" placeholder="••••••••••••" required />
+          </label>
+          <p id="pair-err" class="err" hidden></p>
+          <button id="pair-btn" class="btn primary" type="submit" data-i18n="ext.pairBtn">Pair this browser</button>
+        </form>
+      </section>
+
+      <!-- ===== MAIN ===== -->
+      <section id="view-main" class="view" hidden>
+        <div class="status">
+          <div class="host">
+            <span class="lbl" data-i18n="ext.host">This site</span>
+            <b id="host-name">—</b>
+          </div>
+          <div class="right">
+            <span id="sync-note" class="sync"></span>
+            <button id="btn-refresh" class="icon-btn sm" title="Refresh"></button>
+          </div>
+        </div>
+
+        <div class="search-wrap">
+          <input id="search" type="search" data-i18n-ph="ext.search" placeholder="Search…" />
+        </div>
+
+        <ul id="list" class="list"></ul>
+        <p id="empty" class="empty" hidden></p>
+
+        <div id="settings" class="settings" hidden>
+          <div class="row">
+            <span class="lbl" data-i18n="ext.autoLock">Auto-lock</span>
+            <select id="autolock">
+              <option value="1">1m</option>
+              <option value="5">5m</option>
+              <option value="15">15m</option>
+              <option value="0" data-i18n="st.never">Never</option>
+            </select>
+          </div>
+          <label class="row toggle">
+            <span>
+              <span class="lbl" data-i18n="ext.reauth">Require re-pairing after lock</span>
+              <span class="hint" data-i18n="ext.reauthHint"></span>
+            </span>
+            <input id="reauth" type="checkbox" />
+          </label>
+          <button id="btn-unpair" class="btn ghost danger" data-i18n="ext.disconnect">Unpair this browser</button>
+        </div>
+
+        <footer class="ftr">
+          <span id="email" class="muted xsmall"></span>
+          <span class="grow"></span>
+          <button id="btn-settings" class="btn ghost sm" data-i18n="ext.settings">Settings</button>
+          <button id="btn-lock" class="btn ghost sm danger" data-i18n="ext.lock">Lock</button>
+        </footer>
+      </section>
+
+      <!-- ===== RECOVERY OVERLAY ===== -->
+      <div id="overlay" class="overlay" hidden>
+        <div class="sheet">
+          <div class="sheet-hdr">
+            <b data-i18n="ext.recovery">Recovery codes</b>
+            <span id="rec-badge" class="badge"></span>
+            <button id="rec-close" class="icon-btn" aria-label="Close">×</button>
+          </div>
+          <ul id="rec-list" class="rec-list"></ul>
+        </div>
+      </div>
+
+      <div id="toast" class="toast" hidden></div>
+    </div>
+    <script type="module" src="popup.js"></script>
+  </body>
+</html>
